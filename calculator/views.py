@@ -30,35 +30,36 @@ DATA = {
 #   }
 # }
 
+def serving(recipe, servings):
+    new_recipe = {k: v * servings for k, v in recipe.items()}
+    return new_recipe
+
+
 def omlet(request):
     servings = int(request.GET.get('servings', 1))
+    recipe = DATA['omlet']
+    serve = serving(recipe, servings)
     context = {
-        'recipe': {
-        'яйца, шт': 2 * servings,
-        'молоко, л': 0.1 * servings,
-        'соль, ч.л.': 0.5 * servings,
-        }
+        'recipe': serve,
     }
-    return HttpResponse(f'{context}')
+    return render(request, 'calculator/index.html', context)
+
 
 def pasta(request):
     servings = int(request.GET.get('servings', 1))
+    recipe = DATA['pasta']
+    serve = serving(recipe, servings)
     context = {
-        'recipe': {
-        'макароны, г': 0.3 * servings,
-        'сыр, г': 0.05 * servings,
-        }
+        'recipe': serve,
     }
-    return HttpResponse(f'{context}')
+    return render(request, 'calculator/index.html', context)
+
 
 def buter(request):
     servings = int(request.GET.get('servings', 1))
+    recipe = DATA['buter']
+    serve = serving(recipe, servings)
     context = {
-        'recipe': {
-        'хлеб, ломтик': 1 * servings,
-        'колбаса, ломтик': 1 * servings,
-        'сыр, ломтик': 1 * servings,
-        'помидор, ломтик': 1 * servings,
-        }
+        'recipe': serve,
     }
-    return HttpResponse(f'{context}')
+    return render(request, 'calculator/index.html', context)
